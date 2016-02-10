@@ -16,7 +16,6 @@ Goal of this app is to help user what to wear.
 ![](../master/screenshots/main_screen.png)
 
 ## Libraries Used
-- [loopj/android-async-http](https://github.com/loopj/android-async-http)
 - [bumptech/glide](https://github.com/bumptech/glide)
 - [JakeWharton/butterknife](https://github.com/JakeWharton/butterknife)
 

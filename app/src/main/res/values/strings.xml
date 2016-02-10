@@ -1,5 +1,5 @@
-<resources>
-    <string name="app_name">Crowd Pant</string>
+<resources xmlns:xliff="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">Crowd Pant</string>
     <string name="app_name_no_space">Crowd Pant</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -25,10 +25,10 @@
     <string name="no_image_selected">No image selected</string>
     <string name="cant_proceed_without_write_permission">Can not proceed without WRITE permission</string>
     <string name="outfit">outfit</string>
-    <string name="error_with_reason">Error: %1$s</string>
-    <string name="success_adding_outfit">Successfully added new %1$s</string>
+    <string name="error_with_reason">Error: <xliff:g>%1$s</xliff:g></string>
+    <string name="success_adding_outfit">Successfully added new <xliff:g>%1$s</xliff:g></string>
     <string name="title_add_new_outfit">Add new outfit</string>
-    <string name="no_data_found">No data found</string>
+    <string name="no_data_found">No bookmarked combinations found.</string>
     <string name="no_more_combinations">No more combinations</string>
     <string name="add_to_bookmark">Add to bookmark</string>
     <string name="added_to_bookmark">Added to bookmark</string>
@@ -41,7 +41,7 @@
     <string name="share_app">Share Crowd Pant</string>
     <string name="share_app_title">Share this app</string>
     <string name="share_app_body">Check out this amazing outfit app. https://github.com/umang6891/CrowdPant</string>
-    <string name="add_new_outfit">Add new %1$s</string>
+    <string name="add_new_outfit">Add new <xliff:g>%1$s</xliff:g></string>
     <string name="delete_this_entry">Delete this entry?</string>
     <string name="delete">Delete</string>
     <string name="dismiss">Dismiss</string>
