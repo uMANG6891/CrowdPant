@@ -46,4 +46,7 @@
     <string name="delete">Delete</string>
     <string name="dismiss">Dismiss</string>
     <string name="refresh_combination">Refresh combination</string>
+
+    <string name="notification_title">New combination is now available</string>
+    <string name="notification_message">Check out the new available combination in the app.</string>
 </resources>

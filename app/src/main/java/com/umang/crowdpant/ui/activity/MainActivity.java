@@ -2,7 +2,9 @@ package com.umang.crowdpant.ui.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -103,6 +105,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ButterKnife.bind(this);
 
         disableControls();
@@ -399,6 +402,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onResume() {
         super.onResume();
+
+        // clearing all notifications
+        NotificationManager nMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nMgr.cancelAll();
+
         getSupportLoaderManager().restartLoader(LOADER_OUTFIT_SHIRTS, null, this);
         getSupportLoaderManager().restartLoader(LOADER_OUTFIT_PANTS, null, this);
     }
