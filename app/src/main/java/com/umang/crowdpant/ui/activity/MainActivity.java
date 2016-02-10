@@ -84,6 +84,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private final String SHIRT_POSITION = "SHIRT_POSITION";
     private final String PANT_POSITION = "PANT_POSITION";
+    private Object newShirtPantPositions;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -174,9 +175,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (shirtLoaded && pantLoaded && SHIRTS.getCount() > 0 && PANTS.getCount() > 0) {
             enableControls();
             if (forceUpdate || (lastShirtPos == -1 || lastPantPos == -1)) {
-                Random rand = new Random();
-                lastShirtPos = rand.nextInt(SHIRTS.getCount());
-                lastPantPos = rand.nextInt(PANTS.getCount());
+                getNewShirtPantPositions();
             }
             pagerShirts.setCurrentItem(lastShirtPos);
             pagerPants.setCurrentItem(lastPantPos);
@@ -421,5 +420,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         getSupportLoaderManager().destroyLoader(LOADER_OUTFIT_SHIRTS);
         getSupportLoaderManager().destroyLoader(LOADER_OUTFIT_PANTS);
+    }
+
+    public void getNewShirtPantPositions() {
+        Random rand = new Random();
+        int shirtPos = rand.nextInt(SHIRTS.getCount());
+        int pantPos = rand.nextInt(PANTS.getCount());
+        if (shirtPos == lastShirtPos && pantPos == lastPantPos) {
+            getNewShirtPantPositions();
+        } else {
+            lastShirtPos = shirtPos;
+            lastPantPos = pantPos;
+        }
     }
 }
