@@ -22,8 +22,6 @@ import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -67,7 +65,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private static final int LOADER_OUTFIT_SHIRTS = 0;
     private static final int LOADER_OUTFIT_PANTS = 1;
 
-    //    private int CURRENT_INDEX;
+    // private int CURRENT_INDEX;
+    int lastShirtPos = -1, lastPantPos = -1;
     Cursor SHIRTS, PANTS;
 
     Boolean shirtLoaded = false, pantLoaded = false;
@@ -80,6 +79,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private final int REQUEST_CAMERA = 6534;
     private final int REQUEST_FILE_GALLERY = 4756;
     private Uri captureImageUri;
+
+    private final String SHIRT_POSITION = "SHIRT_POSITION";
+    private final String PANT_POSITION = "PANT_POSITION";
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(SHIRT_POSITION, lastShirtPos);
+        outState.putInt(PANT_POSITION, lastPantPos);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            lastShirtPos = savedInstanceState.getInt(SHIRT_POSITION, -1);
+            lastPantPos = savedInstanceState.getInt(PANT_POSITION, -1);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,28 +154,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 shirtLoaded = true;
                 SHIRTS = data;
                 adapterShirt.swapData(data);
-                showNewPair();
+                showNewPair(false);
                 break;
             case LOADER_OUTFIT_PANTS:
                 pantLoaded = true;
                 PANTS = data;
                 adapterPant.swapData(data);
-                showNewPair();
+                showNewPair(false);
                 break;
             default:
                 break;
         }
     }
 
-    private void showNewPair() {
+    private void showNewPair(boolean forceUpdate) {
         if (shirtLoaded && pantLoaded && SHIRTS.getCount() > 0 && PANTS.getCount() > 0) {
             enableControls();
-            Random rand = new Random();
-            int shirtPos = rand.nextInt(SHIRTS.getCount());
-            int pantPos = rand.nextInt(PANTS.getCount());
-
-            pagerShirts.setCurrentItem(shirtPos);
-            pagerPants.setCurrentItem(pantPos);
+            if (forceUpdate || (lastShirtPos == -1 || lastPantPos == -1)) {
+                Random rand = new Random();
+                lastShirtPos = rand.nextInt(SHIRTS.getCount());
+                lastPantPos = rand.nextInt(PANTS.getCount());
+            }
+            pagerShirts.setCurrentItem(lastShirtPos);
+            pagerPants.setCurrentItem(lastPantPos);
         } else {
             disableControls();
             tvInfo.setText(R.string.no_more_combinations);
@@ -200,14 +219,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 checkIfHasWritePermission(CrowdPantContract.PATH_PANT);
                 break;
             case R.id.main_fab_renew:
-                showNewPair();
+                showNewPair(true);
                 break;
             case R.id.main_fab_bookmark:
+                SHIRTS.moveToPosition(pagerShirts.getCurrentItem());
+                PANTS.moveToPosition(pagerPants.getCurrentItem());
                 ContentValues bookmarkValues = new ContentValues();
                 bookmarkValues.put(BookmarkEntry.COLUMN_SHIRT_ID, SHIRTS.getString(Constants.COL_SHIRT_ID));
                 bookmarkValues.put(BookmarkEntry.COLUMN_PANT_ID, PANTS.getString(Constants.COL_PANT_ID));
                 getContentResolver().insert(BookmarkEntry.CONTENT_URI, bookmarkValues);
-                showToast(getString(R.string.added_to_bookmark));
+                showToast(R.string.added_to_bookmark);
                 break;
             default:
                 break;
@@ -321,7 +342,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                         bitmap = Bitmap.createScaledBitmap(bitmap, imageWidth, IMAGE_MAX_SIZE, true);
                     }
                 }
-                String folder = Environment.getExternalStorageDirectory() + "/"+getString(R.string.app_name_no_space);
+                String folder = Environment.getExternalStorageDirectory() + "/" + getString(R.string.app_name_no_space);
                 String outfitLocation = folder + "/" + OUTFIT_TYPE + "_" + System.currentTimeMillis() + ".jpg";
 
                 // creating folder CrowdFit if it doesn't exists
