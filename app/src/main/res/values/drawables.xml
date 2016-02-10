@@ -1,0 +1,6 @@
+<resources>
+    <item name="ic_menu_home" type="drawable">@android:drawable/ic_menu_myplaces</item>
+    <item name="ic_menu_collection_bookmark" type="drawable">@android:drawable/ic_menu_agenda</item>
+
+    <item name="ic_menu_add" type="drawable">@android:drawable/ic_input_add</item>
+</resources>
