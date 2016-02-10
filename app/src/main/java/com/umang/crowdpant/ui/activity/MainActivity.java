@@ -120,6 +120,39 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         adapterPant = new OutfitAdapter(this, null, Constants.PANT);
         pagerShirts.setAdapter(adapterShirt);
         pagerPants.setAdapter(adapterPant);
+        pagerShirts.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                lastShirtPos = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        pagerPants.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                lastPantPos = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         getSupportLoaderManager().initLoader(LOADER_OUTFIT_SHIRTS, null, this);
         getSupportLoaderManager().initLoader(LOADER_OUTFIT_PANTS, null, this);
