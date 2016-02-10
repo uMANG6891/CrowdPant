@@ -9,16 +9,29 @@ Goal of this app is to help user what to wear.
 - Renew and Bookmark option on the combination
 - Show all Bookmarked/favorited combinations
 - Share Bookmarked pair to other apps
+- Send notification everyday on 6:00 AM
 
 ## Screenshots
 
-![](../master/screenshots/main_suggestion.png)
-
-![](../master/screenshots/add_new_outfit.png)
-
-![](../master/screenshots/bookmarked_pair.png)
+![](../master/screenshots/main_screen.png)
 
 ## Libraries Used
 - [loopj/android-async-http](https://github.com/loopj/android-async-http)
 - [bumptech/glide](https://github.com/bumptech/glide)
 - [JakeWharton/butterknife](https://github.com/JakeWharton/butterknife)
+
+## License
+
+Copyright 2016 Umang Pandya
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
