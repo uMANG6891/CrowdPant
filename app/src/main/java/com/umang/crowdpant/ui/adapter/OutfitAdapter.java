@@ -1,79 +1,75 @@
 package com.umang.crowdpant.ui.adapter;
 
+import android.content.Context;
 import android.database.Cursor;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.umang.crowdpant.R;
-import com.umang.crowdpant.data.CrowdPantContract;
-import com.umang.crowdpant.ui.activity.AddNewOutfitActivity;
-import com.umang.crowdpant.ui.adapter.OutfitAdapter.VH;
+import com.umang.crowdpant.ui.activity.MainActivity;
 import com.umang.crowdpant.utility.Constants;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by umang on 10/02/16.
  */
-public class OutfitAdapter extends RecyclerView.Adapter<VH> {
+public class OutfitAdapter extends PagerAdapter {
 
-    AddNewOutfitActivity context;
-    Cursor OUTFIT_DATA;
-    String OUTFIT_TYPE;
+    MainActivity con;
+    LayoutInflater mLayoutInflater;
+    Cursor outfitData;
+    int outfitType;
 
-    public OutfitAdapter(AddNewOutfitActivity context, String outfitType, Cursor data) {
-        this.context = context;
-        OUTFIT_TYPE = outfitType;
-        OUTFIT_DATA = data;
+    public OutfitAdapter(MainActivity context, Cursor objects, int type) {
+        con = context;
+        mLayoutInflater = (LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        outfitData = objects;
+        outfitType = type;
+    }
+
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        View itemView = mLayoutInflater.inflate(R.layout.container_outfit, container, false);
+
+        outfitData.moveToPosition(position);
+
+        ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
+
+        String path = outfitType == Constants.SHIRT ?
+                outfitData.getString(Constants.COL_SHIRT_STORED_AT) :
+                outfitData.getString(Constants.COL_PANT_STORED_AT);
+
+        Glide.with(con)
+                .load(path)
+                .into(imageView);
+
+        container.addView(itemView);
+
+        return itemView;
     }
 
     @Override
-    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_outfit, parent, false);
-        return new VH(view);
+    public boolean isViewFromObject(View view, Object object) {
+        return view == object;
     }
 
     @Override
-    public void onBindViewHolder(VH holder, int position) {
-        OUTFIT_DATA.moveToPosition(position);
-        String imagePath;
-        if (OUTFIT_TYPE.equalsIgnoreCase(CrowdPantContract.PATH_SHIRT))
-            imagePath = OUTFIT_DATA.getString(Constants.COL_SHIRT_STORED_AT);
-        else
-            imagePath = OUTFIT_DATA.getString(Constants.COL_PANT_STORED_AT);
-        Glide.with(context)
-                .load(imagePath)
-                .into(holder.ivOutfit);
+    public int getCount() {
+        return outfitData == null ? 0 : outfitData.getCount();
     }
 
     @Override
-    public int getItemCount() {
-        return OUTFIT_DATA == null ? 0 : OUTFIT_DATA.getCount();
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        container.removeView((LinearLayout) object);
     }
 
-    public void swapData(Cursor data) {
-        OUTFIT_DATA = data;
+    public void swapData(Cursor objects) {
+        outfitData = objects;
         notifyDataSetChanged();
-    }
-
-    class VH extends RecyclerView.ViewHolder {
-
-        @Bind(R.id.item_o_cv_main)
-        CardView cvMain;
-
-        @Bind(R.id.item_o_iv_outfit)
-        ImageView ivOutfit;
-
-        public VH(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-
     }
 }

@@ -23,28 +23,46 @@
                 android:background="@android:color/white"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/main_iv_shirt"
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:gravity="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+                    android:layout_weight="1">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/main_vp_shirt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <ImageButton
+                        android:id="@+id/main_ib_add_shirt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|top"
+                        android:src="@drawable/ic_menu_add" />
+                </FrameLayout>
 
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:background="@color/separator_line" />
 
-                <ImageView
-                    android:id="@+id/main_iv_pant"
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:gravity="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+                    android:layout_weight="1">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/main_vp_pants"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <ImageButton
+                        android:id="@+id/main_ib_add_pant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|top"
+                        android:src="@drawable/ic_menu_add" />
+                </FrameLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 

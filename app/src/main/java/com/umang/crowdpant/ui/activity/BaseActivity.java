@@ -122,4 +122,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     public void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
+
+    public void showToast(int stringId) {
+        Toast.makeText(this, getString(stringId), Toast.LENGTH_SHORT).show();
+    }
 }

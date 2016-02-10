@@ -35,4 +35,7 @@ public class Constants {
     public static final int COL_BOOKMARK_SHIRT_SAVED_AT = 2;
     public static final int COL_BOOKMARK_PANT_ID = 3;
     public static final int COL_BOOKMARK_PANT_SAVED_AT = 4;
+
+    public static final int SHIRT = 0;
+    public static final int PANT = 1;
 }
