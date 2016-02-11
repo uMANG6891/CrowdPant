@@ -47,9 +47,6 @@ import butterknife.OnClick;
  */
 public class MainActivity extends BaseActivity implements View.OnClickListener, View.OnLongClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 
-    @Bind(R.id.main_cv_card_main)
-    CardView cvMain;
-
     @Bind(R.id.main_vp_shirt)
     ViewPager pagerShirts;
     @Bind(R.id.main_vp_pants)
@@ -219,22 +216,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void disableControls() {
-        fabRenew.setClickable(false);
-        fabBookmark.setClickable(false);
-        fabRenew.setAlpha(0.5f);
-        fabBookmark.setAlpha(0.5f);
-
-        cvMain.setVisibility(View.GONE);
+        fabRenew.setVisibility(View.GONE);
+        fabBookmark.setVisibility(View.GONE);
         tvInfo.setVisibility(View.VISIBLE);
     }
 
     private void enableControls() {
-        fabRenew.setClickable(true);
-        fabBookmark.setClickable(true);
-        fabRenew.setAlpha(1f);
-        fabBookmark.setAlpha(1f);
-
-        cvMain.setVisibility(View.VISIBLE);
+        fabRenew.setVisibility(View.VISIBLE);
+        fabBookmark.setVisibility(View.VISIBLE);
         tvInfo.setVisibility(View.GONE);
     }
 
