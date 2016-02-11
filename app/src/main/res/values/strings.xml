@@ -52,4 +52,5 @@
     <string name="no_shirts_found">No shirts found</string>
     <string name="no_pants_found">No pants found</string>
     <string name="only_one_combination_found">Only one combination possible</string>
+    <string name="add_more_cloths">Add more cloths.</string>
 </resources>

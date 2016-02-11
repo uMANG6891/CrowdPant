@@ -247,7 +247,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 checkIfHasWritePermission(CrowdPantContract.PATH_PANT);
                 break;
             case R.id.main_fab_renew:
-                if(SHIRTS.getCount() == 1 && PANTS.getCount()== 1){
+                if (SHIRTS.getCount() == 1 && PANTS.getCount() == 1) {
                     Toast.makeText(MainActivity.this, R.string.only_one_combination_found, Toast.LENGTH_SHORT).show();
                 }
                 showNewPair(true);
@@ -453,13 +453,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     public void getNewShirtPantPositions() {
         Random rand = new Random();
-        int shirtPos = rand.nextInt(SHIRTS.getCount());
-        int pantPos = rand.nextInt(PANTS.getCount());
-        if (shirtPos == lastShirtPos && pantPos == lastPantPos) {
-            getNewShirtPantPositions();
-        } else {
-            lastShirtPos = shirtPos;
-            lastPantPos = pantPos;
+        if (SHIRTS.getCount() > 1 && PANTS.getCount() > 1) {
+            int shirtPos = rand.nextInt(SHIRTS.getCount());
+            int pantPos = rand.nextInt(PANTS.getCount());
+            if (shirtPos == lastShirtPos && pantPos == lastPantPos) {
+                getNewShirtPantPositions();
+            } else {
+                lastShirtPos = shirtPos;
+                lastPantPos = pantPos;
+            }
+        }else{
+            Toast.makeText(MainActivity.this, R.string.add_more_cloths, Toast.LENGTH_SHORT).show();
         }
     }
 }
