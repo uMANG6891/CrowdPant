@@ -22,10 +22,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.umang.crowdpant.R;
 import com.umang.crowdpant.data.CrowdPantContract;
@@ -56,8 +56,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     FloatingActionButton fabRenew;
     @Bind(R.id.main_fab_bookmark)
     FloatingActionButton fabBookmark;
-    @Bind(R.id.main_tv_info)
-    TextView tvInfo;
+    @Bind(R.id.main_tv_shirts_info)
+    TextView tvShirtInfo;
+    @Bind(R.id.main_tv_pants_info)
+    TextView tvPantInfo;
 
     OutfitAdapter adapterShirt, adapterPant;
 
@@ -81,7 +83,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private final String SHIRT_POSITION = "SHIRT_POSITION";
     private final String PANT_POSITION = "PANT_POSITION";
-    private Object newShirtPantPositions;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -189,12 +190,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 SHIRTS = data;
                 adapterShirt.swapData(data);
                 showNewPair(false);
+                if (data.getCount() > 0) {
+                    tvShirtInfo.setVisibility(View.GONE);
+                }
                 break;
             case LOADER_OUTFIT_PANTS:
                 pantLoaded = true;
                 PANTS = data;
                 adapterPant.swapData(data);
                 showNewPair(false);
+                if (data.getCount() > 0) {
+                    tvPantInfo.setVisibility(View.GONE);
+                }
                 break;
             default:
                 break;
@@ -211,20 +218,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             pagerPants.setCurrentItem(lastPantPos);
         } else {
             disableControls();
-            tvInfo.setText(R.string.no_more_combinations);
         }
     }
 
     private void disableControls() {
         fabRenew.setVisibility(View.GONE);
         fabBookmark.setVisibility(View.GONE);
-        tvInfo.setVisibility(View.VISIBLE);
     }
 
     private void enableControls() {
         fabRenew.setVisibility(View.VISIBLE);
         fabBookmark.setVisibility(View.VISIBLE);
-        tvInfo.setVisibility(View.GONE);
     }
 
     @Override
@@ -243,6 +247,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 checkIfHasWritePermission(CrowdPantContract.PATH_PANT);
                 break;
             case R.id.main_fab_renew:
+                if(SHIRTS.getCount() == 1 && PANTS.getCount()== 1){
+                    Toast.makeText(MainActivity.this, R.string.only_one_combination_found, Toast.LENGTH_SHORT).show();
+                }
                 showNewPair(true);
                 break;
             case R.id.main_fab_bookmark:

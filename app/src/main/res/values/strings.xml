@@ -49,4 +49,7 @@
 
     <string name="notification_title">New combination is now available</string>
     <string name="notification_message">Check out the new available combination in the app.</string>
+    <string name="no_shirts_found">No shirts found</string>
+    <string name="no_pants_found">No pants found</string>
+    <string name="only_one_combination_found">Only one combination possible</string>
 </resources>
