@@ -84,6 +84,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private final String SHIRT_POSITION = "SHIRT_POSITION";
     private final String PANT_POSITION = "PANT_POSITION";
 
+    private boolean isFirstLoad = true;
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(SHIRT_POSITION, lastShirtPos);
@@ -462,8 +464,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 lastShirtPos = shirtPos;
                 lastPantPos = pantPos;
             }
-        }else{
-            Toast.makeText(MainActivity.this, R.string.add_more_cloths, Toast.LENGTH_SHORT).show();
+        } else {
+            if (!isFirstLoad) {
+                Toast.makeText(MainActivity.this, R.string.add_more_cloths, Toast.LENGTH_SHORT).show();
+            }else{
+                isFirstLoad = false;
+            }
         }
     }
 }
